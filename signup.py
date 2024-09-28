@@ -1,31 +1,21 @@
 import streamlit as st
 from pymongo import MongoClient
-
 import base64
-
-
+import hashlib
 
 CONNECTION_STRING = "mongodb+srv://technova:additi123@cluster0.aw8c8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(CONNECTION_STRING)
 db = client['data']
 collection = db['users']
 
-<<<<<<< HEAD
-
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-
-
-
-=======
->>>>>>> 3aad1af0e0393f540d733f4e38bac99a34f8702d
 @st.dialog("Welcome to MatchUP")
 def signup():
     form = st.form("user_info_form")
     form.header("Welcome to Cotere")
     form.caption("We want to know all about you!")
-
 
     firstname = form.text_input("First Name")
     lastname = form.text_input("Last Name")
@@ -69,7 +59,6 @@ def signup():
     password = form.text_input("Password", type="password")
     submit_button = form.form_submit_button("Submit")
 
-
     if submit_button:
         user_data = {
             "firstname": firstname,
@@ -87,9 +76,8 @@ def signup():
             "company": company,
             "bio": bio,
             "interests": interests,
-            "password": password
-            
-            }
+            "password": hash_password(password)  # Hash the password before saving
+        }
         
         if photo is not None:
             photo_bytes = photo.read()
@@ -98,8 +86,6 @@ def signup():
 
         collection.insert_one(user_data)
         st.success("Your information has been saved successfully!")
-
-
 
 def login():
     st.header("Login to Cotere")
@@ -116,8 +102,6 @@ def login():
         else:
             st.error("Invalid email or password")
 
-
-
 def display_users():
     if st.checkbox("Show existing users"):
         users = collection.find()
@@ -127,7 +111,6 @@ def display_users():
             st.write(f"Bio: {user['bio']}, Interests: {user['interests']}")
             if 'photo' in user:
                 st.image(base64.b64decode(user['photo']), caption='Profile Photo', use_column_width=True)
-
 
 def main():
     st.sidebar.title("MatchUP")
@@ -139,4 +122,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-   
