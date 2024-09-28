@@ -14,13 +14,15 @@ collection = db['users']
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-
-
+if "show_signup" not in st.session_state:
+    st.session_state.show_signup = False
+if "show_login" not in st.session_state:
+    st.session_state.show_login = True
 
 @st.dialog("Welcome to MatchUP")
 def signup():
     form = st.form("user_info_form")
-    form.header("Welcome to Cotere")
+    form.header("Welcome to MatchUP")
     form.caption("We want to know all about you!")
 
 
@@ -95,15 +97,17 @@ def signup():
 
         collection.insert_one(user_data)
         st.success("Your information has been saved successfully!")
+        st.session_state.show_signup = False
+        st.session_state.show_login = True
 
 
-
+@st.dialog("Welcome to MatchUP")
 def login():
-    st.header("Login to Cotere")
+    st.header("Login")
     
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
-    
+
     if st.button("Login"):
         user = collection.find_one({"email": email})
         
@@ -112,6 +116,19 @@ def login():
             st.session_state.user = user
         else:
             st.error("Invalid email or password")
+
+    st.subheader("New user?")
+    newsignup = st.button("Sign up")
+
+    if newsignup:
+        st.session_state.show_signup = True
+        st.session_state.show_login = False
+        st.rerun()
+
+if st.session_state.show_login:
+    login()
+elif st.session_state.show_signup:
+    signup()
 
 
 
@@ -129,9 +146,9 @@ def display_users():
 def main():
     st.sidebar.title("MatchUP")
     app_mode = st.sidebar.selectbox("Choose the app mode", ["Sign Up"])
+    #login()
 
     if app_mode == "Sign Up":
-        signup()
         display_users()
 
 if __name__ == "__main__":
