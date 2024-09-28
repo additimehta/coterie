@@ -8,6 +8,7 @@ client = MongoClient(CONNECTION_STRING)
 db = client['data']
 collection = db['users']
 
+@st.dialog("Welcome to MatchUP")
 def signup():
     form = st.form("user_info_form")
     form.header("Welcome to MatchUP")
