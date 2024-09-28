@@ -1,6 +1,8 @@
 import streamlit as st
 from pymongo import MongoClient
+
 import base64
+
 
 
 CONNECTION_STRING = "mongodb+srv://technova:additi123@cluster0.aw8c8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -8,9 +10,17 @@ client = MongoClient(CONNECTION_STRING)
 db = client['data']
 collection = db['users']
 
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
+
+
+@st.dialog("Welcome to MatchUP")
 def signup():
     form = st.form("user_info_form")
-    form.header("Welcome to MatchUP")
+    form.header("Welcome to Cotere")
     form.caption("We want to know all about you!")
 
 
@@ -52,6 +62,8 @@ def signup():
                     'Motorsports', 'Sailing', 'Scuba Diving', 'Calligraphy', 'Stand-up Comedy']
 
     interests = form.multiselect("Interests", interests_list)
+
+    password = form.text_input("Password", type="password")
     submit_button = form.form_submit_button("Submit")
 
 
@@ -71,8 +83,10 @@ def signup():
             "occupation": occupation,
             "company": company,
             "bio": bio,
-            "interests": interests
-        }
+            "interests": interests,
+            "password": password
+            
+            }
         
         if photo is not None:
             photo_bytes = photo.read()
@@ -81,6 +95,23 @@ def signup():
 
         collection.insert_one(user_data)
         st.success("Your information has been saved successfully!")
+
+
+
+def login():
+    st.header("Login to Cotere")
+    
+    email = st.text_input("Email")
+    password = st.text_input("Password", type="password")
+    
+    if st.button("Login"):
+        user = collection.find_one({"email": email})
+        
+        if user and user["password"] == hash_password(password):
+            st.success(f"Welcome back, {user['firstname']}!")
+            st.session_state.user = user
+        else:
+            st.error("Invalid email or password")
 
 
 
