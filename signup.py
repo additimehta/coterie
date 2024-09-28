@@ -96,7 +96,7 @@ def signup():
 
 
 @st.dialog("Welcome to MatchUP")
-def login():
+def user_registration():
     st.header("Login")
     
     email = st.text_input("Email")
