@@ -10,6 +10,7 @@ client = MongoClient(CONNECTION_STRING)
 db = client['data']
 collection = db['users']
 
+<<<<<<< HEAD
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -17,6 +18,8 @@ def hash_password(password):
 
 
 
+=======
+>>>>>>> 3aad1af0e0393f540d733f4e38bac99a34f8702d
 @st.dialog("Welcome to MatchUP")
 def signup():
     form = st.form("user_info_form")
