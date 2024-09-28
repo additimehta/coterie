@@ -2,22 +2,15 @@ import streamlit as st
 from pymongo import MongoClient
 import base64
 import hashlib
+from database import users_collection
 
-CONNECTION_STRING = "mongodb+srv://technova:additi123@cluster0.aw8c8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = MongoClient(CONNECTION_STRING)
-db = client['data']
-collection = db['users']
+collection = users_collection
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-if "show_signup" not in st.session_state:
-    st.session_state.show_signup = False
-if "show_login" not in st.session_state:
-    st.session_state.show_login = True
-
 @st.dialog("Welcome to MatchUP")
-def signup():
+def signUp():
     form = st.form("user_info_form")
     form.header("Welcome to MatchUP")
     form.caption("We want to know all about you!")
@@ -96,7 +89,7 @@ def signup():
 
 
 @st.dialog("Welcome to MatchUP")
-def user_registration():
+def login():
     st.header("Login")
     
     email = st.text_input("Email")
@@ -119,11 +112,6 @@ def user_registration():
         st.session_state.show_login = False
         st.rerun()
 
-if st.session_state.show_login:
-    login()
-elif st.session_state.show_signup:
-    signup()
-
 
 
 def display_users():
@@ -135,14 +123,3 @@ def display_users():
             st.write(f"Bio: {user['bio']}, Interests: {user['interests']}")
             if 'photo' in user:
                 st.image(base64.b64decode(user['photo']), caption='Profile Photo', use_column_width=True)
-
-def main():
-    st.sidebar.title("MatchUP")
-    app_mode = st.sidebar.selectbox("Choose the app mode", ["Sign Up"])
-    #login()
-
-    if app_mode == "Sign Up":
-        display_users()
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from signup import user_registration
+import signup
 
 import streamlit as st
 from database import users_collection
@@ -70,6 +70,18 @@ def display_user_profile(user):
     """, unsafe_allow_html=True)
 
 def main():
+    if "show_signup" not in st.session_state:
+        st.session_state.show_signup = False
+    if "show_login" not in st.session_state:
+        st.session_state.show_login = True
+     
+    # login()
+    # signup.login()
+    if st.session_state.show_login:
+        signup.login()
+    elif st.session_state.show_signup:
+        signup.signUp()
+
     st.title("MatchUP - Swipe to Connect")
     load_css()
 
@@ -112,23 +124,6 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-
-
-
-def main():
-    st.sidebar.title("MatchUP")
-    app_mode = st.sidebar.selectbox("Choose the app mode", ["Sign Up"])
-
-    if app_mode == "Sign Up":
-       user_registration()
-
-
-    
-
-if __name__ == "__main__":
-    main()
 
 
 
