@@ -1,15 +1,12 @@
 import streamlit as st
 from pymongo import MongoClient
-
 import base64
-
-
+import hashlib
 
 CONNECTION_STRING = "mongodb+srv://technova:additi123@cluster0.aw8c8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(CONNECTION_STRING)
 db = client['data']
 collection = db['users']
-
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -24,7 +21,6 @@ def signup():
     form = st.form("user_info_form")
     form.header("Welcome to MatchUP")
     form.caption("We want to know all about you!")
-
 
     firstname = form.text_input("First Name")
     lastname = form.text_input("Last Name")
@@ -68,7 +64,6 @@ def signup():
     password = form.text_input("Password", type="password")
     submit_button = form.form_submit_button("Submit")
 
-
     if submit_button:
         user_data = {
             "firstname": firstname,
@@ -86,9 +81,8 @@ def signup():
             "company": company,
             "bio": bio,
             "interests": interests,
-            "password": password
-            
-            }
+            "password": hash_password(password)  # Hash the password before saving
+        }
         
         if photo is not None:
             photo_bytes = photo.read()
@@ -142,7 +136,6 @@ def display_users():
             if 'photo' in user:
                 st.image(base64.b64decode(user['photo']), caption='Profile Photo', use_column_width=True)
 
-
 def main():
     st.sidebar.title("MatchUP")
     app_mode = st.sidebar.selectbox("Choose the app mode", ["Sign Up"])
@@ -153,16 +146,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-   
-
-# class Person:
-#    def __init__(self, name) -> None:
-#        self.name = name
-#
-#    def get_name(self):
-#        return self.name
-    
-#ayush = Person("ayush")
-
-#.get_name()
-
