@@ -35,6 +35,20 @@ def send_request():
 show_notifications()
 
 
+with st.container():
+    st.write("You have a new connection request!")
+    st.write("Message: You have received a connection request from Chloe Wei.")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Accept", use_container_width=True):
+            st.success("You accepted the connection request!")
+
+    with col2:
+        if st.button("Decline", use_container_width=True):
+            st.warning("You declined the connection request.")
+
+
+
 
 with st.sidebar:
     titlecol1, titlecol2, titlecol3 = st.columns([1, 3, 1])  # Adjust the column widths as needed
