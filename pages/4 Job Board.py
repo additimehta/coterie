@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 with st.sidebar:
 
-    titlecol1, titlecol2, titlecol3 = st.columns([1, 3, 1])  # Adjust the column widths as needed
+    titlecol1, titlecol2, titlecol3 = st.columns([1, 3, 1])  # Column width ratios
     
     with titlecol2:
         st.markdown(
