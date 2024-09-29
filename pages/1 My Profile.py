@@ -1,9 +1,13 @@
 import streamlit as st
+from PIL import Image
 
 col1, col2 = st.columns([1, 2])
 
+image = Image.open("./assets/Emily.jpg")
+
 with col1:
-    st.image("Emily.jpg", use_column_width=True)
+
+    st.image(image, use_column_width=True)
     st.button("Edit photo", use_container_width=True)
 
 with col2:
