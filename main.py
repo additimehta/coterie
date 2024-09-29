@@ -16,7 +16,7 @@ from pages.Notifications import add_notifications, show_notifications
 
 if "is_logged_in" not in st.session_state:
     st.session_state.is_logged_in = False
-    print("not logged in")
+
 
 with st.sidebar:
     titlecol1, titlecol2, titlecol3 = st.columns([1, 3, 1])  # Adjust the column widths as needed
@@ -30,38 +30,13 @@ with st.sidebar:
             }
             </style>
             <div class="center-text">
-                <h1>Welcome</h1>
+                <h1>Welcome to MatchUP</h1>
             </div>
             """,
             unsafe_allow_html=True
         )
-
-    # Create columns
-    col1, col2 = st.columns([2, 1])
-
-    # Center text in the second column (col2)
-    with col2:
-        st.markdown(
-            """
-            <style>
-            .center-text {
-                text-align: center;
-            }
-            </style>
-            <div class="center-text">
-                <h2>Emily Yee</h2>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-    # You can add content to other columns as well
-    with col1:
-        if st.session_state.is_logged_in:
-            st.image(user.get('photo'), width=100)
-            print("hi" + user['firstname'])
-        else:
-            st.image("icon.png", width=100)
+    
+    st.image("./assets/logo.png", use_column_width=True)
 
 def load_user_profiles():
     users = list(users_collection.find())
@@ -70,6 +45,8 @@ def load_user_profiles():
 def load_css():
    css = """
     <style>
+     @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Fredoka:wght@300..700&display=swap');
+
        .user-card {
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -92,7 +69,8 @@ def load_css():
         }
 
         .user-info {
-            
+            font-family: "Fredoka", sans-serif;
+            font-weight: 300;
         }
     </style>
 
@@ -145,12 +123,7 @@ def main():
     elif st.session_state.show_signup:
         signup.signUp()
 
-    if st.session_state.is_logged_in:
-        user = st.session_state.user
-        print(user['firstname'])
-        
-    st.title("MatchUP - Click to Connect") #CHANGE 1
-
+    st.title("MatchUP Click to Connect") #CHANGE 1
     load_css()
 
     users = load_user_profiles()
