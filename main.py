@@ -150,6 +150,7 @@ def main():
         print(user['firstname'])
         
     st.title("MatchUP - Click to Connect") #CHANGE 1
+
     load_css()
 
     users = load_user_profiles()
@@ -170,14 +171,14 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("Ignore"):
+        if st.button("Ignore", use_container_width=True):
             st.session_state.current_index += 1
             if st.session_state.current_index >= len(users):
                 st.session_state.current_index = 0  
 
 
     with col2:
-        if st.button("Connect!", key='connect_button', help="Click to send a connection request"):
+        if st.button("Connect!", key='connect_button', help="Click to send a connection request", use_container_width=True):
             notification_message = f"You sent a connection request to {user['firstname']} {user['lastname']}."
             st.session_state.current_index += 1
             if st.session_state.current_index >= len(users):
