@@ -23,8 +23,8 @@ def signUp():
     age = form.number_input("Age", min_value=16, max_value=100, value=None)
     form.write("I am looking for")
     advice = form.checkbox("Advice/Mentorship")
-    knowledge = form.checkbox("Share my knowledge")
-    network = form.checkbox("Network")
+    knowledge = form.checkbox("Sharing my knowledge")
+    network = form.checkbox("Networking")
 
     industry_options = ['Aerospace', 'Agriculture', 'Automotive', 'Business', 'Banking', 'Biotechnology', 
                         'Chemicals', 'Construction', 'Consulting', 'Consumer Goods', 'Cybersecurity', 
@@ -101,6 +101,10 @@ def login():
         if user and user["password"] == hash_password(password):
             st.success(f"Welcome back, {user['firstname']}!")
             st.session_state.user = user
+#            st.session_state.is_logged_in = True
+    
+#            if st.session_state.is_logged_in:
+#                print("is logged in")
         else:
             st.error("Invalid email or password")
 

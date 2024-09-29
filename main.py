@@ -8,6 +8,55 @@ from database import users_collection
 from PIL import Image
 import base64
 
+if "is_logged_in" not in st.session_state:
+    st.session_state.is_logged_in = False
+    print("not logged in")
+
+with st.sidebar:
+    titlecol1, titlecol2, titlecol3 = st.columns([1, 3, 1])  # Adjust the column widths as needed
+    # Center text in the second column (col2)
+    with titlecol2:
+        st.markdown(
+            """
+            <style>
+            .center-text {
+                text-align: center;
+            }
+            </style>
+            <div class="center-text">
+                <h1>Welcome</h1>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    # Create columns
+    col1, col2 = st.columns([2, 1])
+
+    # Center text in the second column (col2)
+    with col2:
+        st.markdown(
+            """
+            <style>
+            .center-text {
+                text-align: center;
+            }
+            </style>
+            <div class="center-text">
+                <h2>Emily Yee</h2>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    # You can add content to other columns as well
+    with col1:
+        if st.session_state.is_logged_in:
+            st.image(user.get('photo'), width=100)
+            print("hi" + user['firstname'])
+        else:
+            st.image("icon.png", width=100)
+
 def load_user_profiles():
     users = list(users_collection.find())
     return users
@@ -70,18 +119,21 @@ def display_user_profile(user):
     """, unsafe_allow_html=True)
 
 def main():
+
     if "show_signup" not in st.session_state:
         st.session_state.show_signup = False
     if "show_login" not in st.session_state:
         st.session_state.show_login = True
      
-    # login()
-    # signup.login()
-    if st.session_state.show_login:
+    if st.session_state.show_login & (st.session_state.is_logged_in == False):
         signup.login()
     elif st.session_state.show_signup:
         signup.signUp()
 
+    if st.session_state.is_logged_in:
+        user = st.session_state.user
+        print(user['firstname'])
+        
     st.title("MatchUP - Swipe to Connect")
     load_css()
 
