@@ -123,7 +123,23 @@ def main():
     elif st.session_state.show_signup:
         signup.signUp()
 
-    st.title("MatchUP Click to Connect") #CHANGE 1
+    st.markdown(
+        """
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Fredoka:wght@300..700&display=swap');
+
+        
+        .title {
+        font-family: 'Fredoka';
+        font-size: 50px;
+        font-weight:300
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown('<h1 class="title">MatchUP: Click to Connect</h1>', unsafe_allow_html=True)
     load_css()
 
     users = load_user_profiles()
