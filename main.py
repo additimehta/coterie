@@ -21,6 +21,8 @@ def load_user_profiles():
 def load_css():
    css = """
     <style>
+     @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Fredoka:wght@300..700&display=swap');
+
        .user-card {
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -43,7 +45,8 @@ def load_css():
         }
 
         .user-info {
-            
+            font-family: "Fredoka", sans-serif;
+            font-weight: 300;
         }
     </style>
 
@@ -97,7 +100,29 @@ def main():
     elif st.session_state.show_signup:
         signup.signUp()
 
-    st.title("MatchUP Click to Connect") #CHANGE 1
+    st.markdown(
+
+        """
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Fredoka:wght@300..700&display=swap');
+
+        .main-title {
+            font-family: "Fredoka", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            font-variation-settings:
+            "wdth" 60;
+            font-size: 60px;
+        }
+
+        </style>
+        
+        """,
+        unsafe_allow_html=True
+
+    )
+    st.markdown('<h1 class="main-title ">MatchUP Click to Connect</h1>', unsafe_allow_html=True)
     load_css()
 
     users = load_user_profiles()
