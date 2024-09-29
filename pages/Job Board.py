@@ -39,4 +39,4 @@ with st.sidebar:
 
     # You can add content to other columns as well
     with col1:
-        st.image("icon.png", caption="Profile Picture", width=150)
+        st.image("./assets/icon.png", caption="Profile Picture", width=150)

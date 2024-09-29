@@ -1,12 +1,44 @@
 import streamlit as st
+from datetime import datetime
 
 # Display a title
 st.title("MatchUP: Grow your network, one match at a time")
 
 
+
+
+
+def add_notifications(message):
+    st.session_state.notifications.append(message)
+
+
+def show_notifications():
+    st.title("Notifications")
+    if "notifications" not in st.session_state or not st.session_state.notifications:
+        st.info("No notifications yet.")
+        return
+    
+    for notification in st.session_state.notifications:
+        st.success(notification)
+
+
+def send_request(target_email, sender_email):
+   user = collection.find_one({"email": target_email})
+   sender_email = collection.find_one({"email": sender_email})
+   
+   notifications = {
+       "message": f"You have received a connection request from Chloe.",
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "type": "connection_request"
+   }
+
+
+show_notifications()
+
+
+
 with st.sidebar:
     titlecol1, titlecol2, titlecol3 = st.columns([1, 3, 1])  # Adjust the column widths as needed
-    # Center text in the second column (col2)
     with titlecol2:
         st.markdown(
             """
@@ -44,4 +76,4 @@ with st.sidebar:
 
     # You can add content to other columns as well
     with col1:
-        st.image("icon.png", caption="Profile Picture", width=150)
+       st.image("./assets/icon.png", caption="Profile Picture", width=150)

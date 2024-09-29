@@ -74,7 +74,9 @@ def signUp():
             "company": company,
             "bio": bio,
             "interests": interests,
-            "password": hash_password(password)  # Hash the password before saving
+            "password": hash_password(password),  # Hash the password before saving
+            "connections": [], 
+            "connection_count": 0  
         }
         
         if photo is not None:

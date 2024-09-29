@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -7,6 +8,11 @@ import streamlit as st
 from database import users_collection
 from PIL import Image
 import base64
+from pages.Notifications import add_notifications, show_notifications
+
+
+
+
 
 if "is_logged_in" not in st.session_state:
     st.session_state.is_logged_in = False
@@ -72,6 +78,7 @@ def load_css():
             display: flex;
             align-items: center;
             gap: 20px;
+
     
        }
 
@@ -124,6 +131,14 @@ def main():
         st.session_state.show_signup = False
     if "show_login" not in st.session_state:
         st.session_state.show_login = True
+
+# MY CHANGES
+    if "notifications" not in st.session_state:
+        st.session_state.notifications = []
+
+#MY Changes 
+    if "connected" not in st.session_state:
+        st.session_state.connected = False
      
     if st.session_state.show_login & (st.session_state.is_logged_in == False):
         signup.login()
@@ -134,7 +149,7 @@ def main():
         user = st.session_state.user
         print(user['firstname'])
         
-    st.title("MatchUP - Swipe to Connect")
+    st.title("MatchUP - Click to Connect") #CHANGE 1
     load_css()
 
     users = load_user_profiles()
@@ -160,12 +175,17 @@ def main():
             if st.session_state.current_index >= len(users):
                 st.session_state.current_index = 0  
 
+
     with col2:
-        if st.button("Connect!"):
-           
+        if st.button("Connect!", key='connect_button', help="Click to send a connection request"):
+            notification_message = f"You sent a connection request to {user['firstname']} {user['lastname']}."
             st.session_state.current_index += 1
             if st.session_state.current_index >= len(users):
                 st.session_state.current_index = 0  
+            add_notifications(notification_message)
+            st.session_state.connected = True
+
+
 
     # Display remaining users
     if st.session_state.current_index < len(users):
@@ -175,7 +195,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
