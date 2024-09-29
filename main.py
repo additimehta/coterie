@@ -61,7 +61,7 @@ with st.sidebar:
             st.image(user.get('photo'), width=100)
             print("hi" + user['firstname'])
         else:
-            st.image("icon.png", width=100)
+            st.image("./assets/icon.png", width=100)
 
 def load_user_profiles():
     users = list(users_collection.find())
