@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 
 with st.sidebar:
    
@@ -21,3 +22,6 @@ with st.sidebar:
 
    
     st.image("./assets/logo.png",use_column_width=True)
+
+image = Image.open("./assets/resourcehub.png")
+st.image(image, use_column_width=True)

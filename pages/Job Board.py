@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 with st.sidebar:
 
     titlecol1, titlecol2, titlecol3 = st.columns([1, 3, 1])  # Adjust the column widths as needed
@@ -20,3 +21,6 @@ with st.sidebar:
 
     
     st.image("./assets/logo.png", use_column_width=True)
+
+image = Image.open("./assets/jobboard.png")
+st.image(image, use_column_width=True)
