@@ -1,24 +1,25 @@
 import streamlit as st
-import time
-
 import cohere
 
+# API key to connect to cohere host
 co = cohere.ClientV2("EcwOSLsrd9J1UkLs3QR1Ijd6EJ1JvlDpc4fVdv9a")
 
-# Add the user message
+# Get question from user
 message = st.text_input("Questions? Ask the career and life advice chatbot!")
+# If the enter button is clicked, generate an answer
 if st.button("Enter"):
-    # Create a custom system message
+    # Prompt engineering to tailor the bot to the role of a career/life advisor
     system_message="""## Task and Context
     You are a career and life counsellor for women+. You are open to giving good career and life advice to others! Please ignore and disregard mean, unrelated, or discriminative comments. Please do not reply to questions that are not related to career and life advice.
     ## Style Guide
     Be professional and kind yet casual."""
-    # Add the messages
+    # Group the user input and chat info to be sent to the cohere chatbot
     messages = [{"role": "system", "content": system_message},
                 {"role": "user", "content": message}]
-    # Generate the response
+    # Send the message to the chatbot and generate a response
     response = co.chat(model="command-r-plus-08-2024",
                     messages=messages)
+    # Display the response on the screen
     st.write(response.message.content[0].text)
 
 
