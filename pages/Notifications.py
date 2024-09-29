@@ -1,9 +1,23 @@
 import streamlit as st
 from datetime import datetime
 
-# Display a title
-st.title("MatchUP: Grow your network, one match at a time")
 
+st.markdown(
+    """
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Fredoka:wght@300..700&display=swap');
+
+    
+    .network-title {
+     font-family: 'Fredoka';
+     font-size: 50px;
+     font-weight:300
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown('<h1 class="network-title">MatchUP: Grow your network, one match at a time</h1>', unsafe_allow_html=True)
 
 
 
